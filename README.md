@@ -22,3 +22,11 @@ $ kubectl run munin --image=jefferyb/munin
 # Deploy Munin
 $ docker run -itd --name munin -p 4948:4948 jefferyb/munin
 ```
+
+## Volumes
+
+  * `/opt/app-root/sandbox/var/lib` used to store the collected data
+  * `/opt/app-root/sandbox/etc/munin/munin-conf.d` to add your own configuration
+
+## Ports
+  * `4948` - Munin HTTP server
