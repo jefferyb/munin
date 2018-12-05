@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Start a munin node
+${APP_ROOT}/dev_scripts/start_munin-node &
+
+# Start a munin-update loop
+while :; do 
+  ${APP_ROOT}/dev_scripts/run munin-update
+  sleep 60
+done &
+
+# Start the munin httpd
+${APP_ROOT}/dev_scripts/run munin-httpd

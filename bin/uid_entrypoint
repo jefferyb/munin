@@ -1,0 +1,12 @@
+#!/bin/sh
+if ! whoami &> /dev/null; then
+  if [ -w /etc/passwd ]; then
+    echo "${USER_NAME:-munin}:x:$(id -u):0:${USER_NAME:-munin} user:${HOME}:/sbin/nologin" >> /etc/passwd
+  fi
+fi
+
+if [ ! -f ${APP_ROOT}/sandbox/var/lib/datafile.sqlite ]; then
+  cp -fr ${APP_ROOT}/sandbox/var/lib-init/* ${APP_ROOT}/sandbox/var/lib/
+fi
+
+exec "$@"
