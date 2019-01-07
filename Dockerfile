@@ -2,6 +2,8 @@ FROM ubuntu:latest
 
 MAINTAINER Jeffery Bagirimvano <jeffery.rukundo@gmail.com>
 
+ENV TZ=America/Chicago
+
 ENV SUMMARY="Munin Docker image" \
     DESCRIPTION="Munin is a networked resource monitoring tool (started in 2002) that can help analyze resource trends and what just happened to kill our performance? problems. It is designed to be very plug and play."
 
@@ -21,7 +23,11 @@ LABEL name="https://github.com/jefferyb/munin" \
 
 RUN useradd -ms /bin/bash munin
 
-RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y libdbd-sqlite3-perl libdbi-perl \
+RUN \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone && \
+    apt-get update && apt-get dist-upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y libdbd-sqlite3-perl libdbi-perl \
     libfile-copy-recursive-perl libhtml-template-perl \
     libhtml-template-pro-perl libhttp-server-simple-perl \
     libio-socket-inet6-perl liblist-moreutils-perl \
